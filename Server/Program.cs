@@ -1,10 +1,7 @@
-﻿using NServiceBus;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Configuration;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using NServiceBus;
 
 namespace Server
 {
@@ -45,6 +42,8 @@ namespace Server
             Console.ReadKey();
 
             await endpoint.Stop();
+
+            PlaceOrderHandler.DisplayStats();
         }
     }
 }

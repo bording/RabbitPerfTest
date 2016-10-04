@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NServiceBus;
 
 namespace ServerV5
@@ -28,13 +24,14 @@ namespace ServerV5
                 return type.Namespace == "Shared";
             });
 
-
             using (var bus = Bus.Create(config))
             {
                 bus.Start();
                 Console.WriteLine("Server started. Press any key to quit");
                 Console.ReadKey();
             }
+
+            PlaceOrderHandler.DisplayStats();
         }
     }
 }
