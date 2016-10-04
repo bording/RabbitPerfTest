@@ -27,6 +27,18 @@ namespace Client
             var transport = config.UseTransport<RabbitMQTransport>();
             transport.Routing().RouteToEndpoint(typeof(PlaceOrder), "Server");
 
+
+            var conventions = config.Conventions();
+            conventions.DefiningCommandsAs(type =>
+            {
+                return type.Namespace == "Shared";
+            });
+
+            conventions.DefiningExpressMessagesAs(type =>
+            {
+                return type.Namespace == "Shared";
+            });
+
             var endpoint = await Endpoint.Start(config);
 
             var numberOfMessages = 200000;

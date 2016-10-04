@@ -22,6 +22,13 @@ namespace ServerV5
             config.UsePersistence<InMemoryPersistence>();
             config.EnableInstallers();
 
+            var conventions = config.Conventions();
+            conventions.DefiningCommandsAs(type =>
+            {
+                return type.Namespace == "Shared";
+            });
+
+
             using (var bus = Bus.Create(config))
             {
                 bus.Start();

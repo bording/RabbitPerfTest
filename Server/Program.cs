@@ -33,6 +33,12 @@ namespace Server
 
             config.LimitMessageProcessingConcurrencyTo(concurrency);
 
+            var conventions = config.Conventions();
+            conventions.DefiningCommandsAs(type =>
+            {
+                return type.Namespace == "Shared";
+            });
+
             var endpoint = await Endpoint.Start(config);
 
             Console.WriteLine("Server started. Press any key to quit");
