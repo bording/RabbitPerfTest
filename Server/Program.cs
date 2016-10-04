@@ -22,15 +22,15 @@ namespace Server
             var config = new EndpointConfiguration("Server");
             config.UseSerialization<JsonSerializer>();
 
-            var prefetchCount = Convert.ToUInt16(ConfigurationManager.AppSettings["PrefetchCount"]);
-            var consumerCount = Convert.ToInt32(ConfigurationManager.AppSettings["ConsumerCount"]);
+            var prefetchMultiplier = Convert.ToUInt16(ConfigurationManager.AppSettings["PrefetchMultiplier"]);
             var concurrency = Convert.ToInt32(ConfigurationManager.AppSettings["Concurrency"]);
 
-            config.UseTransport<RabbitMQTransport>().PrefetchCount(prefetchCount).ConsumerCount(consumerCount);
+            config.UseTransport<RabbitMQTransport>().PrefetchMultiplier(prefetchMultiplier);
             config.UsePersistence<InMemoryPersistence>();
             config.EnableInstallers();
             config.SendFailedMessagesTo("error");
 
+            config.Recoverability().DisableLegacyRetriesSatellite();
             config.LimitMessageProcessingConcurrencyTo(concurrency);
 
             var conventions = config.Conventions();
