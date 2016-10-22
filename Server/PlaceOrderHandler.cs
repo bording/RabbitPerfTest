@@ -16,13 +16,13 @@ namespace Server
 
         public Task Handle(PlaceOrder message, IMessageHandlerContext context)
         {
-            Interlocked.Increment(ref messageCount);
+            var count = Interlocked.Increment(ref messageCount);
 
-            if (messageCount == warmup)
+            if (count == warmup)
             {
                 stopwatch.Start();
             }
-            else if (messageCount == maximum)
+            else if (count == maximum)
             {
                 stopwatch.Stop();
             }

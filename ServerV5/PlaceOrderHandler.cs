@@ -15,13 +15,13 @@ namespace ServerV5
 
         public void Handle(PlaceOrder message)
         {
-            Interlocked.Increment(ref messageCount);
+            var count = Interlocked.Increment(ref messageCount);
 
-            if (messageCount == warmup)
+            if (count == warmup)
             {
                 stopwatch.Start();
             }
-            else if (messageCount == maximum)
+            else if (count == maximum)
             {
                 stopwatch.Stop();
             }

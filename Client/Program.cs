@@ -26,6 +26,7 @@ namespace Client
 
             var transport = config.UseTransport<RabbitMQTransport>();
             transport.Routing().RouteToEndpoint(typeof(PlaceOrder), "Server");
+            //transport.Routing().RouteToEndpoint(typeof(PlaceOrder), "Server-Lazy");
 
 
             var conventions = config.Conventions();
@@ -34,10 +35,10 @@ namespace Client
                 return type.Namespace == "Shared";
             });
 
-            conventions.DefiningExpressMessagesAs(type =>
-            {
-                return type.Namespace == "Shared";
-            });
+            //conventions.DefiningExpressMessagesAs(type =>
+            //{
+            //    return type.Namespace == "Shared";
+            //});
 
             var endpoint = await Endpoint.Start(config);
 

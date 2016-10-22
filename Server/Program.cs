@@ -17,6 +17,7 @@ namespace Server
             Console.Title = "Server";
 
             var config = new EndpointConfiguration("Server");
+            //var config = new EndpointConfiguration("Server-Lazy");
             config.UseSerialization<JsonSerializer>();
 
             var prefetchMultiplier = Convert.ToUInt16(ConfigurationManager.AppSettings["PrefetchMultiplier"]);

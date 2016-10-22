@@ -11,6 +11,7 @@ namespace ServerV5
 
             var config = new BusConfiguration();
             config.EndpointName("Server");
+            //config.EndpointName("Server-Lazy");
 
             config.UseSerialization<JsonSerializer>();
 
