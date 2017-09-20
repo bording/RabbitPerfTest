@@ -1,23 +1,16 @@
-﻿using NServiceBus;
-using Shared;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using NServiceBus;
+using Shared;
 
-namespace Client
+namespace ClientV6
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            MainAsync().GetAwaiter().GetResult();
-        }
-
-        static async Task MainAsync()
-        {
-            Console.Title = "Client";
+            Console.Title = "Client-V6";
 
             var config = new EndpointConfiguration("Client");
             config.UseSerialization<JsonSerializer>();
@@ -27,7 +20,6 @@ namespace Client
             var transport = config.UseTransport<RabbitMQTransport>();
             transport.Routing().RouteToEndpoint(typeof(PlaceOrder), "Server");
             //transport.Routing().RouteToEndpoint(typeof(PlaceOrder), "Server-Lazy");
-
 
             var conventions = config.Conventions();
             conventions.DefiningCommandsAs(type =>

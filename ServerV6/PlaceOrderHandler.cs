@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using NServiceBus;
 using Shared;
 
-namespace Server
+namespace ServerV6
 {
     class PlaceOrderHandler : IHandleMessages<PlaceOrder>
     {

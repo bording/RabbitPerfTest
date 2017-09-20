@@ -3,18 +3,13 @@ using System.Configuration;
 using System.Threading.Tasks;
 using NServiceBus;
 
-namespace Server
+namespace ServerV6
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            MainAsync().GetAwaiter().GetResult();
-        }
-
-        static async Task MainAsync()
-        {
-            Console.Title = "Server";
+            Console.Title = "Server-V6";
 
             var config = new EndpointConfiguration("Server");
             //var config = new EndpointConfiguration("Server-Lazy");
@@ -23,7 +18,10 @@ namespace Server
             var prefetchMultiplier = Convert.ToUInt16(ConfigurationManager.AppSettings["PrefetchMultiplier"]);
             var concurrency = Convert.ToInt32(ConfigurationManager.AppSettings["Concurrency"]);
 
-            config.UseTransport<RabbitMQTransport>().PrefetchMultiplier(prefetchMultiplier);
+            var transport = config.UseTransport<RabbitMQTransport>();
+            transport.PrefetchMultiplier(prefetchMultiplier);
+            transport.DelayedDelivery().DisableTimeoutManager();
+
             config.UsePersistence<InMemoryPersistence>();
             config.EnableInstallers();
             config.SendFailedMessagesTo("error");
