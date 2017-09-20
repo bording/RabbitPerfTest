@@ -12,7 +12,7 @@ namespace ServerV7
         const int warmup = 10000;
         const int maximum = 200000;
         static int messageCount;
-        static Stopwatch stopwatch = new Stopwatch();
+        static readonly Stopwatch stopwatch = new Stopwatch();
 
         public Task Handle(PlaceOrder message, IMessageHandlerContext context)
         {
