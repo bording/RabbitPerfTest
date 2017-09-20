@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using NServiceBus;
 using Shared;
@@ -35,9 +36,17 @@ namespace ClientV6
             var endpoint = await Endpoint.Start(config);
 
             var numberOfMessages = 200000;
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
             await DirectSendAwaitAll(endpoint, numberOfMessages);
+            stopwatch.Stop();
 
             await endpoint.Stop();
+
+            var seconds = Convert.ToDecimal(stopwatch.ElapsedTicks) / Stopwatch.Frequency;
+            Console.WriteLine($"Messages: {numberOfMessages} Timer: {seconds} seconds. m/s: {numberOfMessages / seconds}");
+            Console.ReadKey();
         }
 
         static Task DirectSendAwaitAll(IEndpointInstance endpoint, int number)
